@@ -1,6 +1,8 @@
-from .serializers import ChatSerializer, MessageSerializer
+from .serializers import ChatSerializer, MessageSerializer, UserSerializer, UserChatSerializer, \
+    MessageCreateWithUsername, UserHyperlinkedSerializer, ChatCreateWithTg
 from chat_models.models import Chat, Message
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, CreateAPIView
+from users.models import User, UserChat
 
 
 class ListCreateMessage(ListCreateAPIView):
@@ -21,3 +23,31 @@ class RetrieveUpdateMessage(RetrieveUpdateAPIView):
 class RetrieveUpdateDestroyChat(RetrieveUpdateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+
+
+class ListCreateUser(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserHyperlinkedSerializer
+
+
+class ListCreateUserChat(ListCreateAPIView):
+    queryset = UserChat.objects.all()
+    serializer_class = UserHyperlinkedSerializer
+
+
+class RetrieveUpdateUserChat(RetrieveUpdateAPIView):
+    queryset = UserChat.objects.all()
+    serializer_class = UserHyperlinkedSerializer
+
+
+class RetrieveUpdateUser(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CreateMessageFromUsername(CreateAPIView):
+    serializer_class = MessageCreateWithUsername
+
+
+class CreateChatWithUsername(CreateAPIView):
+    serializer_class = ChatCreateWithTg
